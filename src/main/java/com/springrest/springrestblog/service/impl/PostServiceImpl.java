@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.springrest.springrestblog.entity.Post;
+import com.springrest.springrestblog.exception.ResourceNotFoundException;
 import com.springrest.springrestblog.payload.PostDto;
 import com.springrest.springrestblog.repository.PostRepository;
 import com.springrest.springrestblog.service.PostService;
@@ -33,17 +34,38 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public List<PostDto> getAllPosts() {
+	public List<Post> getAllPosts() {
 		List<Post> postList = postRepository.findAll();
 		List<PostDto> posts = new ArrayList<>();
 		
 		for(Post e:postList) {
-			posts.add(e);
+//			posts.add(e);
 		}
 		
-		return posts;
+		return postList;
 	}
 
+	@Override
+	public PostDto getPostById(long id) {
+		//https://szymonkrajewski.pl/the-practical-difference-between-findby-and-getby-in-repositories/
+//		Post post = postRepository.getById(id); 
+		Post post = postRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("post", "id", id+"") );
+		PostDto postDto = mapToDto(post);
+		return postDto;
+	}
+	
+	@Override
+	public PostDto updatePostById(PostDto postDto, long id) {
+		Post post = postRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("post", "id", id+"") );
+		post.setTitle(postDto.getTitle());
+		post.setDescription(postDto.getDescription());
+		post.setContent(postDto.getContent());
+		Post updatedPost = postRepository.save(post);
+		
+		
+		return mapToDto(updatedPost);
+	}
+	
 	// convert entity to dto
 	private PostDto mapToDto(Post post) {
 		PostDto postDto = new PostDto();
