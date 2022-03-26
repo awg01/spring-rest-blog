@@ -1,5 +1,6 @@
 package com.springrest.springrestblog.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -33,8 +34,14 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public List<PostDto> getAllPosts() {
-
-		return null;
+		List<Post> postList = postRepository.findAll();
+		List<PostDto> posts = new ArrayList<>();
+		
+		for(Post e:postList) {
+			posts.add(e);
+		}
+		
+		return posts;
 	}
 
 	// convert entity to dto
