@@ -1,5 +1,7 @@
 package com.springrest.springrestblog.service.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.springrest.springrestblog.entity.Post;
@@ -36,5 +38,11 @@ public class PostServiceImpl implements PostService {
 		postResponse.setContent(newPost.getContent());
 		
 		return postResponse;
+	}
+	
+	@Override
+	public List<PostDto> getAllPosts() {
+		
+		return null;
 	}
 }
