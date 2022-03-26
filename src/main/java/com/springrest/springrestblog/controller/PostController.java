@@ -36,12 +36,21 @@ public class PostController {
 	}
 	
 	//get all posts
+//	@GetMapping
+//	public List<Post> getAllPosts() {
+//		return postService.getAllPosts();
+//	}
+	
+	//get all posts pagination
 	@GetMapping
-	public List<Post> getAllPosts() {
-		return postService.getAllPosts();
+	public List<Post> getAllPosts(
+			@PathVariable(value="pageNo", required=false) int  pageNo, 
+			@PathVariable(value="pageSize", required=false) int pageSize
+	){
+		return postService.getAllPosts(pageNo, pageSize);
 	}
 	
-	//why simple public Post object return type is not allowed for getPost method and we need to use response entity
+	
 	//get a single post by id
 	@GetMapping("/{id}")
 	public ResponseEntity<PostDto> getPostById(@PathVariable long id) {

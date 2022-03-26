@@ -10,7 +10,7 @@ import com.springrest.springrestblog.payload.PostDto;
 public interface PostService {
   PostDto createPost(PostDto postDto);
 //  List<PostDto> getAllPosts();
-  List<Post> getAllPosts();
+  List<Post> getAllPosts(int pageNo, int pageSize);
   PostDto getPostById(long id);
   PostDto updatePostById(PostDto postDto, long id);
   void deletePostById(long id);

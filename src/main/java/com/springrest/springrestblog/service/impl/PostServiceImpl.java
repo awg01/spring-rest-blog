@@ -1,8 +1,11 @@
 package com.springrest.springrestblog.service.impl;
 
+import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.springrest.springrestblog.entity.Post;
@@ -34,15 +37,21 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public List<Post> getAllPosts() {
-		List<Post> postList = postRepository.findAll();
-		List<PostDto> posts = new ArrayList<>();
+	public List<Post> getAllPosts(int pageNo, int pageSize) {
+		//pagination
+		PageRequest pageable = PageRequest.of(pageNo, pageSize);
+		
+		
+//		List<Post> postList = postRepository.findAll();
+		Page<Post> postList = postRepository.findAll(pageable);
+		
+		List<Post> posts = postList.getContent();
 		
 		for(Post e:postList) {
 //			posts.add(e);
 		}
 		
-		return postList;
+		return posts;
 	}
 
 	@Override
