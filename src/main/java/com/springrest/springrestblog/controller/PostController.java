@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,6 +52,13 @@ public class PostController {
 	@PutMapping("/{id}")
 	public ResponseEntity<PostDto> updatePostById(@RequestBody PostDto postDto,  @PathVariable long id){
 		return ResponseEntity.ok(postService.updatePostById(postDto, id));
+	}
+	
+	//delete post
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> deletePostById(@PathVariable long id){
+		postService.deletePostById(id);
+		return ResponseEntity.ok("Deleted post successfully");
 	}
 
 }
