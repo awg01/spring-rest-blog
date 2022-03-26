@@ -1,0 +1,1 @@
+Project Details [🔗](https://github.com/awg01/spring-rest-blog/wiki)
