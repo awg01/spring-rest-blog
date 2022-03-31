@@ -19,6 +19,7 @@ import com.springrest.springrestblog.entity.Post;
 import com.springrest.springrestblog.payload.PostDto;
 import com.springrest.springrestblog.payload.PostResponse;
 import com.springrest.springrestblog.service.PostService;
+import com.springrest.springrestblog.utils.AppConstants;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -47,10 +48,10 @@ public class PostController {
 	@GetMapping
 	public PostResponse getAllPosts(
 			//changed from @PathVariable to @RequestParam
-			@RequestParam(value="pageNo", required=false, defaultValue="0") int  pageNo, 
-			@RequestParam(value="pageSize", required=false, defaultValue="10") int pageSize,
-			@RequestParam(value="sortBy", required=false, defaultValue="id") String sortBy,
-			@RequestParam(value="sortDir", required=false, defaultValue="asc") String sortDir
+			@RequestParam(value="pageNo", required=false, defaultValue=AppConstants.DEFAULT_PAGE_NUMBER) int  pageNo, 
+			@RequestParam(value="pageSize", required=false, defaultValue=AppConstants.DEFAULT_PAGE_SIZE) int pageSize,
+			@RequestParam(value="sortBy", required=false, defaultValue=AppConstants.DEFAULT_SORT_BY) String sortBy,
+			@RequestParam(value="sortDir", required=false, defaultValue=AppConstants.DEFAULT_SORT_DIR) String sortDir
 			
 	){
 		return postService.getAllPosts(pageNo, pageSize, sortBy, sortDir);
