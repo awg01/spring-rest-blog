@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.springrest.springrestblog.entity.Post;
 import com.springrest.springrestblog.exception.ResourceNotFoundException;
 import com.springrest.springrestblog.payload.PostDto;
+import com.springrest.springrestblog.payload.PostResponse;
 import com.springrest.springrestblog.repository.PostRepository;
 import com.springrest.springrestblog.service.PostService;
 
@@ -37,7 +38,7 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public List<Post> getAllPosts(int pageNo, int pageSize) {
+	public PostResponse getAllPosts(int pageNo, int pageSize) {
 		//pagination
 		PageRequest pageable = PageRequest.of(pageNo, pageSize);
 		
@@ -45,13 +46,22 @@ public class PostServiceImpl implements PostService {
 //		List<Post> postList = postRepository.findAll();
 		Page<Post> postList = postRepository.findAll(pageable);
 		
-		List<Post> posts = postList.getContent();
+		List<Post> content = postList.getContent();
 		
 		for(Post e:postList) {
 //			posts.add(e);
 		}
 		
-		return posts;
+		PostResponse postResponse = new PostResponse();
+		postResponse.setContent(content);
+		postResponse.setPageNo(postList.getNumber());
+		postResponse.setPageSize(postList.getSize());
+		postResponse.setTotalElements(postList.getTotalElements());
+		postResponse.setTotalPages(postList.getTotalPages());
+		postResponse.setLast(postList.isLast());
+		postResponse.setFirst(postList.isFirst());
+		
+		return postResponse;
 	}
 
 	@Override

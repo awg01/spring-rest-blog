@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springrest.springrestblog.entity.Post;
 import com.springrest.springrestblog.payload.PostDto;
+import com.springrest.springrestblog.payload.PostResponse;
 import com.springrest.springrestblog.service.PostService;
 
 @RestController
@@ -44,12 +45,12 @@ public class PostController {
 	
 	//get all posts pagination
 	@GetMapping
-	public ResponseEntity<List<Post>> getAllPosts(
+	public PostResponse getAllPosts(
 			//changed from @PathVariable to @RequestParam
 			@RequestParam(value="pageNo", required=false, defaultValue="0") int  pageNo, 
 			@RequestParam(value="pageSize", required=false, defaultValue="10") int pageSize
 	){
-		return ResponseEntity.ok(postService.getAllPosts(pageNo, pageSize));
+		return postService.getAllPosts(pageNo, pageSize);
 	}
 	
 	
