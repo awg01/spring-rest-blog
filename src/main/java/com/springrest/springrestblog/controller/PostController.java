@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,11 +44,12 @@ public class PostController {
 	
 	//get all posts pagination
 	@GetMapping
-	public List<Post> getAllPosts(
-			@PathVariable(value="pageNo", required=false) int  pageNo, 
-			@PathVariable(value="pageSize", required=false) int pageSize
+	public ResponseEntity<List<Post>> getAllPosts(
+			//changed from @PathVariable to @RequestParam
+			@RequestParam(value="pageNo", required=false, defaultValue="0") int  pageNo, 
+			@RequestParam(value="pageSize", required=false, defaultValue="10") int pageSize
 	){
-		return postService.getAllPosts(pageNo, pageSize);
+		return ResponseEntity.ok(postService.getAllPosts(pageNo, pageSize));
 	}
 	
 	
